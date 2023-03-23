@@ -1,0 +1,106 @@
+
+create database taskend
+on
+(name ='taskend_dat',
+filename='D:\taskend.mdf',
+size=4,
+maxsize=100,
+filegrowth=1)
+log on
+(name='taskend_log',
+filename='D:\taskend_log.LDF',
+size=1,
+filegrowth=10%);
+
+
+
+
+
+
+
+
+
+create table staff(
+	sno char(10) primary key,
+	sname char(10) not null,
+	sage int not null,
+	spos char(16) not null,
+	ssex char(2) not null);
+create table work(
+	workno char(16) primary key,
+	sno char(10) not null,
+	worktime char(16),
+	endtime char(16),
+	worknot char(10) not null,
+	foreign key(sno) references staff(sno) on delete cascade);
+create table overwork(
+	overno char(16) primary key,
+	sno char(10) not null,
+	overtime char(16),
+	overendtime char(16),
+	overdays char(10) not null,
+	foreign key(sno) references staff(sno) on delete cascade);
+create table offwork(
+	offno char(16) primary key,
+	sno char(10) not null,
+	offtime char(16),
+	offendtime char(16),
+	offdays char(10) not null,
+	foreign key(sno) references staff(sno) on delete cascade);
+create table outwork(
+	outno char(16) primary key,
+	sno char(10) not null,
+	outtime char(16),
+	outendtime char(16),
+	outdays char(10) not null,
+	foreign key(sno) references staff(sno) on delete cascade);
+create table monthwork(
+	sno char(16) primary key,
+	monworkdays char(10) not null,
+	monoverdays char(10) not null,
+	monoffdays char(10) not null,
+	monoutdays char(10) not null,);
+insert into staff values('211001','李勇',23,'安卓研发工程师','男');
+insert into staff values('211002','张三',22,'IOS研发工程师','男');
+insert into staff values('211003','马邦德',23,'秘书','女');
+insert into staff values('211004','蒋伍德',45,'网络工程师','男');
+insert into staff values('211005','马走日',24,'安卓研发工程师','男');
+insert into staff values('211006','项飞田',20,'IOS研发工程师','男');
+
+insert into work values('952347110121','211001','2021/11/1/9:29','2021/11/1/18:30','出勤');
+insert into work values('952347110231','211001','','','未出勤');
+insert into work values('952347110312','211001','2021/11/3/9:29','2021/11/3/17:30','出勤');
+insert into work values('952347110123','211002','2021/11/1/9:25','2021/11/1/22:30','出勤');
+insert into work values('952347110232','211002','2021/11/2/9:29','2021/11/2/17:30','出勤');
+insert into work values('952347110101','211003','2021/11/1/9:29','2021/11/1/17:31','出勤');
+insert into work values('952347110145','211004','2021/11/1/9:28','2021/11/1/17:31','出勤');
+insert into work values('952347110134','211005','2021/11/1/9:32','2021/11/1/17:31','出勤');
+insert into work values('952347110135','211006','2021/11/1/9:24','2021/11/1/17:31','出勤');
+
+insert into overwork values('952357110121','211001','2021/11/1/17:30','2021/11/1/20:30','3小时');
+insert into overwork values('952357110123','211002','2021/11/1/17:30','2021/11/1/22:30','5小时');
+insert into overwork values('952357110122','211003','2021/11/1/17:30','2021/11/1/19:30','2小时');
+
+insert into offwork values('952367111121','211001','2021/11/11/9:30','2021/11/12/17:30','2天');
+insert into offwork values('952367111225','211002','2021/11/12/9:30','2021/11/12/17:30','1天');
+insert into offwork values('952367111323','211003','2021/11/12/9:30','2021/11/12/12:00','0.5天');
+insert into offwork values('952367111401','211001','2021/11/12/9:30','2021/11/12/12:00','0.5天');
+
+insert into outwork values('952377110521','211001','2021/11/05/9:30','2021/11/08/17:30','4天');
+insert into outwork values('952377110522','211002','2021/11/05/9:30','2021/11/08/17:30','4天');
+insert into outwork values('952377110523','211003','','','0天');
+insert into outwork values('952377112005','211002','2021/11/20/9:30','2021/11/22/17:30','3天');
+
+insert into monthwork values('211001','15天','10小时','3天','4天');
+insert into monthwork values('211002','16天','24小时','3天','3天');
+insert into monthwork values('211003','20天','7小时','2天','0天');
+insert into monthwork values('211004','20天','12小时','0天','2天');
+
+
+
+select * from staff;
+select * from overwork;
+select * from offwork;
+select * from outwork;
+select * from work;
+select * from monthwork;

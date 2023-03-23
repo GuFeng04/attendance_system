@@ -1,0 +1,43 @@
+
+create trigger trig_offwork
+on offwork
+after insert,update
+as begin
+	if update(offdays)begin
+		print'不能修改请假天数'
+		rollback transaction
+	end
+end;
+
+update offwork set offtime='2021/11/11/9:30' where offno='952367111121';
+
+
+
+
+//overwork-不能修改加班天数
+create trigger trig_overwork
+on overwork
+after update
+as begin
+	if update(overdays)begin
+		print'不能修改加班天数'
+		rollback transaction
+	end
+end;
+
+update overwork set overdays='0天' where overno='952357110121';
+
+
+
+
+
+//staff表删除插入修改时显示表格
+create trigger trig_staff
+on staff
+after insert,delete,update
+as begin
+	select * from staff
+end;
+
+insert into staff values('211007','周日',25,'IOS研发工程师','男');
+delete from staff where sno='211007';
